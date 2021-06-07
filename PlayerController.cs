@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour {
             return;
         }
         //마우스 왼쪽 버튼을 눌렀으며 && 최대 점프 횟수 (2)에 도달하지 않았다면
-        if (Input.GetMouseButtonDown(0) && jumpCount < 2)
+        if (Input.GetKeyDown(KeyCode.Space)&& jumpCount < 2)
         {
             //점프 횟수 증가
             jumpCount++;
@@ -39,18 +39,21 @@ public class PlayerController : MonoBehaviour {
             //오디오소스 재생
             playerAudio.Play();
         }
-        else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
+        else if (Input.GetKeyUp(KeyCode.Space) && playerRigidbody.velocity.y > 0)
         {
             //마우스 왼쪽 버튼에서 손을 때는 순간 && 속도의 y값이 양수라면(위로 상승중)
             //현재 속도를 절반으로 변경
-            playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
+            playerRigidbody.velocity = playerRigidbody.velocity * 0.4f;
         }
         //애니메이터의 Grounded 파라미터를 isGround 값을 갱신
-        animator.SetBool("Gronded", isGrounded);
+        animator.SetBool("Grounded", isGrounded);
    }
 
 
    private void Die() {
+
+        Time.timeScale = 0f;
+
         // 애니메이터 Die 트리거 파라미터를 셋
         animator.SetTrigger("Die");
 
